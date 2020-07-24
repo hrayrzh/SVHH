@@ -40,3 +40,7 @@ class ExplorerController {
     };
 }
 
+const root = new Folder();
+// TODO: to be changed to module to be a singlton
+let explorerView = new ExplorerView();
+let explorerController = new ExplorerController(root, explorerView);
