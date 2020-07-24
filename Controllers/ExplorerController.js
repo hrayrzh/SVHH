@@ -9,8 +9,8 @@ class ExplorerController {
     };
     
     setupEventListeners() {
-        document.querySelector(".explorer").addEventListener('dblclick', this.ctrlAddItem);
-        //document.querySelector(".explorer").addEventListener('click', this.ctrlDeleteItem);
+        document.querySelector(".folders").addEventListener('dblclick', this.ctrlAddItem);
+        //document.querySelector(".folders").addEventListener('click', this.ctrlDeleteItem);
     };
 
     ctrlAddItem = (event/*, childName, type*/) => {
