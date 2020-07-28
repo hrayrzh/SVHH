@@ -6,6 +6,7 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	text-decoration: none;
 }
 
 
@@ -13,21 +14,70 @@
 /*BODY End*/
 /**********/
 
-/***************/
-/*Folders Start*/
-/***************/
+/*************/
+/*Files Start*/
+/*************/
 
-#folders{
+#files{
 	height: 100%;
-	width: 20%;
-	background-color: bisque;
+	width: 25%;
+	background-color: #faebd7;
 	position: absolute;
 	left: 0;
 }
 
-/*************/
-/*Folders End*/
-/*************/
+#files ul{
+	list-style-type: none;
+}
+
+#files li{
+	cursor: pointer;
+	margin: 10px 0;
+}
+
+#files li ul{
+	padding-left: 30px;
+}
+
+#create{
+	height: 10%;
+	background-color: bisque;
+}
+
+#create ul{
+	display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+	height: 100%;
+  align-items: center;
+}
+
+#create li{
+	text-align: center;
+	cursor: pointer;
+}
+
+#create img{
+	height: 20px;
+}
+
+#folders{
+	padding: 15px 50px;
+	font-size: 20px;
+}
+
+#folders img{
+	height: 20px;
+}
+
+.editandtrash{
+	float: right;
+  margin: 0 5px;
+}
+
+/***********/
+/*Files End*/
+/***********/
 
 /************/
 /*Tabs Start*/
@@ -35,11 +85,32 @@
 
 #tabs{
 	height: 10%;
-	width: 80%;
+	width: 75%;
 	background-color: cadetblue;
 	position: absolute;
 	right: 0;
 	top: 0;
+	display: flex;
+  padding: 20px 10px;
+}
+
+.tab{
+	border: 1px solid black;
+	padding: 0px 10px;
+	display: flex;
+	background-color: #deb887;
+	align-items: center;
+}
+
+.tab img{
+	height: 20px;
+  margin-left: 10px;
+}
+
+
+.tab img:first-child{
+	margin: 0px 5px 0px 0px;
+	height: 15px;
 }
 
 /**********/
@@ -52,11 +123,18 @@
 
 #txtarea{
 	height: 90%;
-	width: 80%;
+	width: 75%;
 	background-color: darkgray;
 	position: absolute;
 	right: 0;
 	bottom: 0;
+	display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+textarea{
+	padding: 15px;
 }
 
 /*************/
