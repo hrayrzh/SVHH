@@ -1,15 +1,28 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
-	<title>Document</title>
-	<link rel="stylesheet" href="./styles/css.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team 2 Editor</title>
+    <link rel="stylesheet" href="index.css">
 </head>
 <body>
-	<div id="app">
-		<div id="folders"></div>
-		<div id="tabs"></div>
-		<div id="txtarea"></div>
-	</div>
+    <div id="app">
+        <div id="explorer">
+            <img src = 'https://img.icons8.com/officel/2x/add-file.png' 
+            alt = 'Add file'
+            onclick="createFile()">
+            <img src = 'https://d2gg9evh47fn9z.cloudfront.net/800px_COLOURBOX6458762.jpg' 
+            alt = 'Add folder' 
+            onclick = "createFolder()">
+        </div>
+        <div id="tab"></div>
+        <div id="editor">
+            <textarea class = 'textarea'></textarea>
+        </div>
+      </div>
+      <!-- <script src = 'app.js' type="module"></script> -->
+      <script src="Explorer.js"></script>
+      <!-- <script src="Editor.js"></script> -->
 </body>
 </html>
