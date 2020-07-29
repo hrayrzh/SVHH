@@ -6,7 +6,6 @@ class Folder {
 
     getName() {
         createFolder(this.name, this.fileName);
-        // createFolder(this.fileName);
     }
 
     rename() {
@@ -22,7 +21,7 @@ class File {
     }
 
     getName() {
-        createFile(this.name)
+        createFile(this.name, this.content)
     }
 
     getContent() { }
@@ -37,24 +36,6 @@ class File {
 const explorer = document.getElementById('explorer');
 const folderList = [];
 const fileList = [];
-// function createElem() {
-//     const elementName = document.createElement('input');
-//     elementName.type = 'text';
-//     elementName.classList.add('elementName');
-//     explorer.appendChild(elementName);
-//     elementName.addEventListener('change', function() {
-
-//         const element = document.createElement('ul');
-//         const elementList = document.createElement('li');
-//         elementList.id = 'element';
-//         elementList.innerHTML = elementName.value;
-//         elementName.value = '';
-//         elementName.style.display = 'none';
-
-//         element.appendChild(elementList);
-//         explorer.appendChild(element);
-//     })
-// }
 
 function createFolder() {
     const folderName = document.createElement('input');
@@ -63,7 +44,6 @@ function createFolder() {
     folderName.addEventListener('change', function () {
         const folder = document.createElement('ul');
         const folderElement = document.createElement('li');
-        folderElement.contenteditable = false;
         folderElement.classList.add('folderElement')
         folderElement.id = 'folder';
         folderElement.innerHTML = folderName.value;
@@ -91,9 +71,23 @@ function createFile() {
         const fileElement = document.createElement('li');
         fileElement.id = 'file';
         fileElement.innerHTML = fileName.value;
-        const myFile = new File(fileElement.innerHTML);
+        const myFile = new File(fileElement.innerHTML, {content: 'Your code here'});
 
-        fileElement.addEventListener('click', function(){
+        if (!(fileElement.innerHTML.includes('.'))) {
+            alert('Invalid file name');
+            fileElement.innerHTML = '';
+        }
+        else if (fileElement.innerHTML.endsWith('.html')) {
+            fileElement.innerHTML = `<> ${fileElement.innerHTML}`
+        }
+        else if (fileElement.innerHTML.endsWith('.css')) {
+            fileElement.innerHTML = `# ${fileElement.innerHTML}`
+        }
+        else if (fileElement.innerHTML.endsWith('.js')) {
+            fileElement.innerHTML = `JS ${fileElement.innerHTML}`
+        }  
+
+        fileElement.addEventListener('click', function () {
             addTab(fileElement.innerHTML);
         })
 
@@ -107,11 +101,11 @@ function createFile() {
     return fileList
 }
 
-function renameFileFolder(name){
-    name.addEventListener('dblclick', function() {
+function renameFileFolder(name) {
+    name.addEventListener('dblclick', function () {
         let editable = document.querySelector('.folderElement');
         console.log(editable);
-        editable.onclick = function() {
+        editable.onclick = function () {
             editable.setAttribute("contentEditable", true);
             // editable.contentEditable = true;
         }
@@ -121,11 +115,28 @@ function renameFileFolder(name){
 ////////// Tabs ////////
 const tab = document.querySelector('#tab');
 
-function addTab(fileName){
+function addTab(fileName) {
     const tabElement = document.createElement('button');
+    const closeIcon = document.createElement('img');
+    closeIcon.src = 'closeIcon.png';
+    // closeIcon.display = 'none';
     tabElement.classList.add('tabLink');
     tabElement.innerHTML = fileName;
-    
 
+    tabElement.addEventListener('click', function(file){
+        editor(file.content);
+        console.log(file.content)
+    })
+
+    tabElement.appendChild(closeIcon);
     tab.appendChild(tabElement);
 }
+//////////Editor///////////
+const editorElem = document.querySelector('#editor');
+
+ function editor(content){
+    const editorElement = document.querySelector('.textarea');
+    editorElement.innerHTML = content;
+    editorElem.appendChild(editorElement);
+
+ }
