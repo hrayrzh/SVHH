@@ -4,7 +4,8 @@
 	<meta charset="UTF-8">
 	<title>Document</title>
 	<link rel="stylesheet" href="./styles/css.css">
-	<script src="src/index.js"></script>
+	<link rel="stylesheet" href="./lib/codemirror.css">
+	<link rel="stylesheet" href="./lib/midnight.css">
 </head>
 <body>
 	<div id="app">
@@ -16,69 +17,7 @@
 				</ul>
 			</div>
 			<div id='folders'>
-				<ul>
-					<li>
-						<img src="./img/png/003-html.png" alt="">
-						file
-						<img src="./img/png/005-trash.png" alt="" class ="editandtrash">
-						<img src="./img/png/004-edit.png" alt="" class ="editandtrash">
-					</li>
-					<li>
-						<img src="./img/png/openfolder.png" alt="" class="folderBranch">
-						<img src="./img/png/025-folder.png" alt="">
-						folder
-						<img src="./img/png/005-trash.png" alt="" class ="editandtrash">
-						<img src="./img/png/004-edit.png" alt="" class ="editandtrash">
-						<ul>
-							<li>
-								<img src="./img/png/002-css.png" alt="">
-								file
-								<img src="./img/png/005-trash.png" alt="" class ="editandtrash">
-								<img src="./img/png/004-edit.png" alt="" class ="editandtrash">
-							</li>
-							<li>
-								<img src="./img/png/002-css.png" alt="">
-								file
-								<img src="./img/png/005-trash.png" alt="" class ="editandtrash">
-								<img src="./img/png/004-edit.png" alt="" class ="editandtrash">	
-							</li>
-							<li>
-								<img src="./img/png/openfolder.png" alt="" class="folderBranch">
-								<img src="./img/png/025-folder.png" alt="">
-								folder
-								<img src="./img/png/005-trash.png" alt="" class ="editandtrash">
-								<img src="./img/png/004-edit.png" alt="" class ="editandtrash">
-								<ul>
-									<li>
-										<img src="./img/png/001-js.png" alt="">
-										file
-										<img src="./img/png/005-trash.png" alt="" class ="editandtrash">
-										<img src="./img/png/004-edit.png" alt="" class ="editandtrash">
-									</li>
-									<li>
-										<img src="./img/png/001-js.png" alt="">
-										file
-										<img src="./img/png/005-trash.png" alt="" class ="editandtrash">
-										<img src="./img/png/004-edit.png" alt="" class ="editandtrash">
-									</li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-					<li>
-						<img src="./img/png/003-html.png" alt="">
-						file
-						<img src="./img/png/005-trash.png" alt="" class ="editandtrash">
-						<img src="./img/png/004-edit.png" alt="" class ="editandtrash">
-					</li>
-					<li>
-							<img src="./img/png/closefolder.png" alt="">
-							<img src="./img/png/025-folder.png" alt="">
-							folder
-							<img src="./img/png/005-trash.png" alt="" class ="editandtrash">
-							<img src="./img/png/004-edit.png" alt="" class ="editandtrash">
-					</li>
-				</ul>
+				<ul id="root"></ul>
 			</div>
 		</div>
 		<div id="tabs">
@@ -87,10 +26,31 @@
 				<span>file</span>
 				<img src="./img/png/005-trash.png" alt="">
 			</div>
+			<div class="tab">
+				<img src="./img/png/003-html.png" alt="">
+				<span>file</span>
+				<img src="./img/png/005-trash.png" alt="">
+			</div>
 		</div>
 		<div id="txtarea">
-			<textarea name="" id="" cols="150" rows="35">console.log("Hello World");</textarea>
+			<textarea id="myTextArea">console.log("Hello World")</textarea>
 		</div>
 	</div>
+	<script>
+		
+	</script>
+	
+	<script src="src/index.js"></script>
+	<script src="./lib/codemirror.js"></script>
+	<script src="./lib/javascript.js"></script>
+	<script>
+		const myTextarea = document.getElementById("myTextArea");
+  const editor = CodeMirror.fromTextArea(myTextarea, {
+    lineNumbers: true,
+		theme: "midnight",
+		mode: {name: "javascript", json: true}
+  });
+	</script>
+	
 </body>
 </html>

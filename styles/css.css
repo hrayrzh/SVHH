@@ -70,11 +70,18 @@
 	height: 20px;
 }
 
-.editandtrash{
+.edit, .trash{
 	float: right;
   margin: 0 5px;
 }
 
+.closed{
+	transform: rotate(270deg);
+}
+
+.opened{
+	transform: rotate(0);
+}
 /***********/
 /*Files End*/
 /***********/
@@ -95,11 +102,16 @@
 }
 
 .tab{
-	border: 1px solid black;
-	padding: 0px 10px;
-	display: flex;
-	background-color: #deb887;
-	align-items: center;
+	border: 1px solid white;
+  border-top: 0;
+  border-bottom: 0;
+  padding: 0px 10px;
+  display: flex;
+  border-radius: 5px;
+  background-color: #108e9e;
+  align-items: center;
+  margin: 0 10px;
+  box-shadow: 7px 4px 11px #0b2a05;
 }
 
 .tab img{
@@ -131,10 +143,6 @@
 	display: flex;
   justify-content: center;
   align-items: center;
-}
-
-textarea{
-	padding: 15px;
 }
 
 /*************/
