@@ -12,12 +12,16 @@ for (i = 0; i < toggler.length; i++) {
 
 class ExplorerController {
     
-    constructor(root, view) {
-        this.root = root;
+    constructor(view) {
+                //debugger
+        this.currentId = 0;        
+        this.fileModel = new FilesModel(new Folder('root', this.currentId));
+        document.querySelector(".caret").id = 0;
         this.view = view;
         
         this.setupCustomEventListeners();
         this.setupEventListeners(document.querySelector(".caret"), 'root');
+
     };
     
     setupCustomEventListeners() {
@@ -69,31 +73,45 @@ class ExplorerController {
         });
         
         //document.getElementById("add_folder_id").addEventListener('click', this.ctrlAddItem);
-        
-        item.addEventListener("click", function() {
-            item.querySelector(".nested").classList.toggle("active");
-            item.querySelector(".nested").classList.toggle("caret-down");
-        });    
+        if (type === 'folder'){
+            item.addEventListener("click", function() {
+                item.querySelector(".nested").classList.toggle("active");
+                item.querySelector(".nested").classList.toggle("caret-down");
+            });  
+        }
     };
     
 
     ctrlAddItem = (type) => {
+
         // Hide it AFTER the action was triggered
         $(".custom-menu").hide(100);
-        
+
         let childName = prompt("Insert " + type + " name");
         let parent = this.currentItem; 
+                        debugger;
+        // Add the item to the UI
+        ++this.currentId;
+        let newListItem = this.view.addListItem(parent, childName, type, this.currentId);
+        
+        this.setupEventListeners(newListItem, type);
 
         // Create the file/folder item
-        let newItem = (type === 'folder') ? new Folder(childName)
-                                          : new File(childName);
+        //?? do we need the newItem? or only name and type?
+        let newItem = (type === 'folder') ? new Folder(childName, this.currentId)
+                                          : new File(childName, this.currentId);
 
-
-        // Add the item to the UI
-        let newListItem = this.view.addListItem(parent, newItem, type);
+        let parentId = parent.id;
+        if (!parentId)
+            parentId = parent.parentNode.id;
+        
+        let parentFolder = this.fileModel.findItemById(+parentId);
+        if (parentFolder)
+        {
+            parentFolder.addChild(newItem);
+        }
         
 
-        this.setupEventListeners(newListItem, type);
     };
 
     ctrlDeleteItem = () => {
@@ -110,7 +128,8 @@ class ExplorerController {
     };
 }
 
-const root = new Folder();
+//const root = new Folder();
 // TODO: to be changed to module to be a singlton
 let explorerView = new ExplorerView();
-let explorerController = new ExplorerController(root, explorerView);
+//let fileModel = new FilesModel();
+let explorerController = new ExplorerController(explorerView);

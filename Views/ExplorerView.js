@@ -1,7 +1,8 @@
 // Explrer view class works with explorer UI parts
 class ExplorerView {
-    addListItem(parent, child, type) {
-        let childName = child.name;
+    addListItem(parent, childName, type, id) {
+        //debugger;
+        //let childName = child.name;
         
         let nested = parent.parentElement.querySelector(".nested");
         nested.classList.add("active");
@@ -18,7 +19,8 @@ class ExplorerView {
         }
 
         let newChild = document.createElement('li');
-        newChild.innerHTML = html;        
+        newChild.innerHTML = html;
+        newChild.id = id;
         nested.appendChild(newChild);
         
         return newChild;
