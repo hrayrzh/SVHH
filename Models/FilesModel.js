@@ -45,12 +45,14 @@ class FilesModel {
             return root;
         }
         
-        for (let i = 0; i < root.listOfChildren.length; ++i)
-        {
-            let curr = this.find(root.listOfChildren[i], id);
-            if (curr) {
-                return curr;
-            } 
+        if (root.listOfChildren) {
+            for (let i = 0; i < root.listOfChildren.length; ++i)
+            {
+                let curr = this.find(root.listOfChildren[i], id);
+                if (curr) {
+                    return curr;
+                } 
+            }
         }
         
         return undefined;
@@ -93,5 +95,14 @@ class Folder {
     }*/
     addChild(newItem) {
         this.listOfChildren.push(newItem);
+    }
+    
+    removeChild(childId) {
+        for (let i = 0; i < this.listOfChildren.length; ++i)
+        {
+            if (this.listOfChildren[i].id === childId) {
+                this.listOfChildren.splice(i, 1);
+            } 
+        }
     }
 }

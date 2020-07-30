@@ -89,7 +89,7 @@ class ExplorerController {
 
         let childName = prompt("Insert " + type + " name");
         let parent = this.currentItem; 
-                        debugger;
+                        //debugger;
         // Add the item to the UI
         ++this.currentId;
         let newListItem = this.view.addListItem(parent, childName, type, this.currentId);
@@ -118,13 +118,33 @@ class ExplorerController {
         // Hide it AFTER the action was triggered
         $(".custom-menu").hide(100);
         
+        //debugger
         let item = this.currentItem;
+
         
-        // TODO: remove from parent's childList
+        let itemId = item.id;
+        if (!itemId) {
+            item = item.parentNode;
+            itemId = item.id;
+        }
+            
+        
+        let parentItem = item.parentNode;
+        let parentId = parentItem.id;
+        if (!parentId)
+            parentId = parentItem.parentNode.id;
         
 
+        
+        let parentFolder = this.fileModel.findItemById(+parentId);
+        if (parentFolder)
+        {
+            parentFolder.removeChild(+itemId);
+        }
+        
         // remove from the UI
         this.view.deleteListItem(item);
+
     };
 }
 
