@@ -1,64 +1,180 @@
-/************/
-/*BODY Start*/
-/************/
+/* Tree View */
 
-*{
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
+/* Remove default bullets */
+ul, #myUL {
+  list-style-type: none;
+}
+
+/* Remove margins and padding from the parent ul */
+#myUL {
+  margin: 0;
+  padding: 0;
+}
+
+/* Style the caret/arrow */
+.caret {
+  cursor: pointer;
+  user-select: none; /* Prevent text selection */
+}
+
+/* Create the caret/arrow with a unicode, and style it */
+.caret::before {
+  content: "\25B6";
+  color: lightgray;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+/* Rotate the caret/arrow icon when clicked on (using JavaScript) */
+.caret-down::before {
+  transform: rotate(90deg);
+}
+
+/* Hide the nested list */
+.nested {
+  display: none;
+}
+
+/* Show the nested list when the user clicks on the caret/arrow (with JavaScript) */
+.active {
+  display: block;
 }
 
 
-/**********/
-/*BODY End*/
-/**********/
 
-/***************/
-/*Folders Start*/
-/***************/
 
-#folders{
-	height: 100%;
-	width: 20%;
-	background-color: bisque;
-	position: absolute;
-	left: 0;
+
+
+* {
+    margin: 0em;
+    /*padding: 0em;*/ 
+    color: #ffffff;
+    background-color: #252525;
+}
+#explorer {
+    width: 20%;
+    height: 100%;
+    background-color: #252525;
+    position: absolute;
 }
 
-/*************/
-/*Folders End*/
-/*************/
-
-/************/
-/*Tabs Start*/
-/************/
-
-#tabs{
-	height: 10%;
-	width: 80%;
-	background-color: cadetblue;
-	position: absolute;
-	right: 0;
-	top: 0;
+#tab {
+    width: 100%;
+    height: 20%;
+    margin-left: 20%;
+    background-color: #202020;
+    position: absolute;
 }
 
-/**********/
-/*Tabs End*/
-/**********/
-
-/***************/
-/*Txtarea Start*/
-/***************/
-
-#txtarea{
-	height: 90%;
-	width: 80%;
-	background-color: darkgray;
-	position: absolute;
-	right: 0;
-	bottom: 0;
+.tabLink {
+    margin-top: 80px;
+}
+ 
+#editor {
+    width: 100%;
+    height: 100%;
+    margin-left: 20%;
+    margin-top: 8%;
+    position: absolute;
+    background-color: #141414;
 }
 
-/*************/
-/*Txtarea End*/
-/*************/
+div {
+    color: #ffffff;
+    box-sizing: border-box;
+}
+img {
+    width: 7%;
+    height: 3%;
+    cursor: pointer;
+}
+
+/* Tab */
+.tabLink {
+    width: 10%;
+    height: 30px;
+    margin: auto;
+    margin-top: 75px;
+    text-align: center;
+    overflow: hidden;
+    border: 1px solid #ccc;
+    background-color: #080808;
+  }
+  
+  /* Style the buttons inside the tab */
+  .tabLink button {
+    background-color: #080808;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+  }
+  
+  /* Change background color of buttons on hover */
+  .tabLink button:hover {
+    background-color: #080808;
+  }
+  
+  /* Create an active/current tablink class */
+  .tabLink button.active {
+    background-color: #ccc;
+  }
+  
+  /* Style the tab content */
+  .tabcontent {
+    display: none;
+    padding: 6px 12px;
+    border: 1px solid #ccc;
+    border-top: none;
+  }
+
+  /* Editor */
+.textarea {
+    width: 100%;
+    height: 100%;
+    color: #ffffff;
+ }
+
+
+
+
+
+/* Context menu */
+
+/* The whole thing */
+.custom-menu {
+    display: none;
+    z-index: 1000;
+    position: absolute;
+    overflow: hidden;
+    border: 1px solid #CCC;
+    white-space: nowrap;
+    font-family: sans-serif;
+    background: #FFF;
+    color: #333;
+    border-radius: 5px;
+    padding: 0;
+}
+
+/* Each of the items in the list */
+.custom-menu li {
+    padding: 8px 12px;
+    cursor: pointer;
+    list-style-type: none;
+    transition: all .3s ease;
+    user-select: none;
+}
+
+.custom-menu li:hover {
+    background-color: #DEF;
+}
+
+
+
+
+
+
+
