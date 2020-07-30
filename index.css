@@ -84,6 +84,34 @@ img {
     border-top: none;
   }
 
+  #tab div {
+    position: relative;
+  }
+
+  #tab div button:nth-child(1) {
+    position: absolute;
+    top: -25px;
+    min-width: 145px;
+  }
+
+  #tab div button:nth-child(2) {
+    width: 30px;
+    height: 30px;
+    left: 114px;
+    top: 50px;
+    position: absolute;
+    background-image: url('./images/closeImage.png');
+    background-size: 27px;
+  } 
+
+  #tab div img {
+    width: 15px;
+    height: 15px;
+    position: absolute;
+    left: 115px;
+    top: 51px;
+  }
+
   /* Editor */
 .textarea {
     width: 100%;

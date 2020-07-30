@@ -116,9 +116,11 @@ function renameFileFolder(name) {
 const tab = document.querySelector('#tab');
 
 function addTab(fileName) {
+    const tabDiv = document.createElement('div');
     const tabElement = document.createElement('button');
-    const closeIcon = document.createElement('img');
-    closeIcon.src = 'closeIcon.png';
+    const closeIconElem = document.createElement('button');
+    // const closeIcon = document.createElement('img');
+    // closeIcon.src = './images/closeImage.png';
     // closeIcon.display = 'none';
     tabElement.classList.add('tabLink');
     tabElement.innerHTML = fileName;
@@ -128,9 +130,21 @@ function addTab(fileName) {
         console.log(file.content)
     })
 
-    tabElement.appendChild(closeIcon);
-    tab.appendChild(tabElement);
+    closeIconElem.addEventListener('click', function(event) {
+        removeTab(event);
+    })
+
+    tabDiv.appendChild(tabElement);
+    // tabDiv.appendChild(closeIcon);
+
+    tabDiv.appendChild(closeIconElem);
+    tab.appendChild(tabDiv);
 }
+
+    function removeTab(event) {
+        let a = event.target;
+        a.parentElement.remove();
+    }
 //////////Editor///////////
 const editorElem = document.querySelector('#editor');
 
