@@ -17,14 +17,16 @@ class ExplorerController {
         this.view = view;
         
         this.setupCustomEventListeners();
-        this.setupEventListeners(document.querySelector(".caret"));
+        this.setupEventListeners(document.querySelector(".caret"), 'root');
     };
     
     setupCustomEventListeners() {
-        document.getElementById("add_folder_id").addEventListener('click', this.ctrlAddItem);    
+        document.getElementById("add_folder_id").addEventListener('click', () => {this.ctrlAddItem('folder')});
+        document.getElementById("add_file_id").addEventListener('click', () => {this.ctrlAddItem('file')});
+        document.getElementById("delete_id").addEventListener('click', () => {this.ctrlDeleteItem()});
     };
     
-    setupEventListeners(item) {
+    setupEventListeners(item, type) {
         item.addEventListener('contextmenu', (event) => {
             // Avoid the real one
             event.preventDefault();
@@ -32,6 +34,20 @@ class ExplorerController {
             this.currentItem = event.target;
     
             // Show contextmenu
+            if (type === 'root') {
+                document.getElementById("add_folder_id").style.display = "block";
+                document.getElementById("add_file_id").style.display = "block";
+                document.getElementById("delete_id").style.display = "none";
+            }
+            else if (type === 'file'){
+                document.getElementById("add_folder_id").style.display = "none";
+                document.getElementById("add_file_id").style.display = "none";
+                document.getElementById("delete_id").style.display = "block";
+            } else {
+                document.getElementById("add_folder_id").style.display = "block";
+                document.getElementById("add_file_id").style.display = "block";
+                document.getElementById("delete_id").style.display = "block";
+            }
             $(".custom-menu").finish().toggle(100).
     
             // In the right position (the mouse)
@@ -52,7 +68,7 @@ class ExplorerController {
             }
         });
         
-        document.getElementById("add_folder_id").addEventListener('click', this.ctrlAddItem);
+        //document.getElementById("add_folder_id").addEventListener('click', this.ctrlAddItem);
         
         item.addEventListener("click", function() {
             item.querySelector(".nested").classList.toggle("active");
@@ -61,12 +77,12 @@ class ExplorerController {
     };
     
 
-    ctrlAddItem = () => {
-        let type = 'folder';
-        //console.log("add item");
-        let childName = prompt("Insert Folder Name");
-        let parent = this.currentItem;
-        console.log(parent);     
+    ctrlAddItem = (type) => {
+        // Hide it AFTER the action was triggered
+        $(".custom-menu").hide(100);
+        
+        let childName = prompt("Insert " + type + " name");
+        let parent = this.currentItem; 
 
         // Create the file/folder item
         let newItem = (type === 'folder') ? new Folder(childName)
@@ -76,15 +92,15 @@ class ExplorerController {
         // Add the item to the UI
         let newListItem = this.view.addListItem(parent, newItem, type);
         
+
+        this.setupEventListeners(newListItem, type);
+    };
+
+    ctrlDeleteItem = () => {
         // Hide it AFTER the action was triggered
         $(".custom-menu").hide(100);
         
-
-        this.setupEventListeners(newListItem);
-    };
-
-    ctrlDeleteItem = (event/*, childName, type*/) => {
-        let item = event.target;
+        let item = this.currentItem;
         
         // TODO: remove from parent's childList
         

@@ -12,23 +12,25 @@ class ExplorerView {
         let html;
         if (type === 'folder') {
             html = '<span class="caret">' + childName + '</span> <ul class="nested"> </ul>';
-            //html += '<i class="fa fa-folder"; style="font-size:20px; color:lightgray;"> ' + childName + ' </i> </li>';
         }
         else {
-            html = '<li>' + childName + '</li>';
+            html = childName;
         }
-        
-        //html = "<li>" + childName + "</li>";
+
         let newChild = document.createElement('li');
-        newChild.innerHTML = html;
-        //nested.insertAdjacentHTML('beforeend', html);
-        
+        newChild.innerHTML = html;        
         nested.appendChild(newChild);
         
         return newChild;
     };
     
     deleteListItem(child) {
-        child.parentNode.removeChild(child);
+        if (child.tagName === 'LI') {
+            child.parentNode.removeChild(child);
+        }
+        else {
+            let item = child.parentNode;
+            item.parentNode.removeChild(item);
+        }
     };
 }
