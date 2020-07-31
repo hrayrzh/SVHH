@@ -1,45 +1,40 @@
 // Explrer controller class
-
-var toggler = document.getElementsByClassName("caret");
-var i;
-
-for (i = 0; i < toggler.length; i++) {
-  toggler[i].addEventListener("click", function() {
-    this.parentElement.querySelector(".nested").classList.toggle("active");
-    this.classList.toggle("caret-down");
-  });
-}
-
 class ExplorerController {
     
     constructor(view) {
-                //debugger
         this.currentId = 0;        
         this.fileModel = new FilesModel(new Folder('root', this.currentId));
         document.querySelector(".caret").id = 0;
         this.view = view;
         
         this.setupCustomEventListeners();
-        this.setupEventListeners(document.querySelector(".caret"), 'root');
+        this.setupEventListeners( document.querySelector(".caret"), 'root');
 
     };
     
     setupCustomEventListeners() {
+        document.querySelector(".folders").addEventListener('click', () => {this.ctrlShowContent()});        
         document.getElementById("add_folder_id").addEventListener('click', () => {this.ctrlAddItem('folder')});
         document.getElementById("add_file_id").addEventListener('click', () => {this.ctrlAddItem('file')});
         document.getElementById("delete_id").addEventListener('click', () => {this.ctrlDeleteItem()});
         
-        document.querySelector(".folders").addEventListener('click', () => {this.ctrlShowContent()});
+        // If the document is clicked somewhere
+        window.addEventListener("click",function(){
+            document.getElementById("context-menu").classList.remove("active");
+        });
     };
     
     setupEventListeners(item, type) {
         item.addEventListener('contextmenu', (event) => {
             // Avoid the real one
             event.preventDefault();
+            // Stop propogation of the event to its parents
+            event.stopImmediatePropagation();
+            $(".context-menu").hide();
             
             this.currentItem = event.target;
     
-            // Show contextmenu
+            // Create/edit contextmenu
             if (type === 'root') {
                 document.getElementById("add_folder_id").style.display = "block";
                 document.getElementById("add_file_id").style.display = "block";
@@ -52,29 +47,17 @@ class ExplorerController {
             } else {
                 document.getElementById("add_folder_id").style.display = "block";
                 document.getElementById("add_file_id").style.display = "block";
-                document.getElementById("delete_id").style.display = "block";
+                document.getElementById("delete_id").style.display = "block"
             }
-            $(".custom-menu").finish().toggle(100).
-    
-            // In the right position (the mouse)
-            css({
-                top: event.pageY + "px",
-                left: event.pageX + "px"
-            });
+
+            var contextElement = document.getElementById("context-menu");
+            contextElement.style.top = event.pageY + "px";
+            contextElement.style.left = event.pageX + "px";
+            contextElement.classList.add("active");
+            
+            $(".context-menu").show();
         });
         
-        // If the document is clicked somewhere
-        item.addEventListener("mousedown", function (e) {
-    
-            // If the clicked element is not the menu
-            if (!$(e.target).parents(".custom-menu").length > 0) {
-        
-                // Hide it
-                $(".custom-menu").hide(100);
-            }
-        });
-        
-        //document.getElementById("add_folder_id").addEventListener('click', this.ctrlAddItem);
         if (type === 'folder'){
             item.addEventListener("click", function() {
                 item.querySelector(".nested").classList.toggle("active");
@@ -85,13 +68,9 @@ class ExplorerController {
     
 
     ctrlAddItem = (type) => {
-
-        // Hide it AFTER the action was triggered
-        $(".custom-menu").hide(100);
-
         let childName = prompt("Insert " + type + " name");
         let parent = this.currentItem; 
-                        //debugger;
+
         // Add the item to the UI
         ++this.currentId;
         let newListItem = this.view.addListItem(parent, childName, type, this.currentId);
@@ -99,7 +78,6 @@ class ExplorerController {
         this.setupEventListeners(newListItem, type);
 
         // Create the file/folder item
-        //?? do we need the newItem? or only name and type?
         let newItem = (type === 'folder') ? new Folder(childName, this.currentId)
                                           : new File(childName, this.currentId);
 
@@ -113,17 +91,11 @@ class ExplorerController {
             parentFolder.addChild(newItem);
         }
         
-
     };
 
     ctrlDeleteItem = () => {
-        // Hide it AFTER the action was triggered
-        $(".custom-menu").hide(100);
-        
-        //debugger
         let item = this.currentItem;
 
-        
         let itemId = item.id;
         if (!itemId) {
             item = item.parentNode;
@@ -150,8 +122,6 @@ class ExplorerController {
     };
 
     saveContent(item){
-
-        //let prevItem = this.currentItem;
         //Check to undefined
         if (item) {
             let id = item.id;
@@ -171,6 +141,7 @@ class ExplorerController {
     };
 
     showContent(item) {
+        //Check to undefined
         if (item) {
             let id = item.id;
             if (!id) {

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Team 2 Editor_H</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles/css.css">
          
 </head>
@@ -15,17 +16,25 @@
         <div class="folders" role="treeitem" aria-expanded="false" style="float: left;  width: 30%; height: 100%; background:black;">
             
             <ul id="myUL">
-                <li><span class="caret">Working Directory</span>
+                <li id = "root_id" ><span class="caret">Working Directory</span>
                     <ul class="nested"> 
                     </ul>
     
                 </li>
             </ul>
-            <ul class='custom-menu'>
-                <li id="add_folder_id" data-action="add_folder">Add Folder</li>
-                <li id="add_file_id" data-action="add_file">Add File</li>
-                <li id="delete_id" data-action="delete_item">Delete</li>
-            </ul>
+        
+            <div id="context-menu">
+                <div id="add_folder_id" class="item">
+                    <i class="fa fa-folder"></i> New Folder
+                </div>
+                <div id="add_file_id" class="item">
+                    <i class="fa fa-file"></i> New File
+                </div>
+                <div id="delete_id" class="item">
+                    <i class="fa fa-trash-o"></i> Delete
+                </div>
+            </div>
+            
         </div>
      
         <div class="txtarea" contenteditable="true" style="  white-space: pre; position: absolute; right: 0px; width: 70%; height: 100%;  border: 3px solid white; padding: 10px; background: #252525; color: white; top: 8px; " >

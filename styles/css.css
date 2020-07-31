@@ -139,39 +139,40 @@ img {
  }
 
 
-
-
-
 /* Context menu */
-
-/* The whole thing */
-.custom-menu {
-    display: none;
-    z-index: 1000;
-    position: absolute;
-    overflow: hidden;
-    border: 1px solid #CCC;
-    white-space: nowrap;
-    font-family: sans-serif;
-    background: #FFF;
-    color: #333;
-    border-radius: 5px;
-    padding: 0;
+/*body {
+  margin:0px;
+  font-family:"Open Sans",sans-serif;
+}*/
+#context-menu {
+  position:absolute;
+  z-index:10000;
+  width:150px;
+  background:#1b1a1a;
+  border-radius:5px;
+  transform:scale(0);
+  transform-origin:top left;
 }
-
-/* Each of the items in the list */
-.custom-menu li {
-    padding: 8px 12px;
-    cursor: pointer;
-    list-style-type: none;
-    transition: all .3s ease;
-    user-select: none;
+#context-menu.active {
+  transform:scale(1);
+  transition:transform 300ms ease-in-out;
 }
-
-.custom-menu li:hover {
-    background-color: #DEF;
+#context-menu .item {
+  padding:8px 10px;
+  font-size:15px;
+  color:#eee;
 }
-
+#context-menu .item:hover {
+  background:#555;
+}
+#context-menu .item i {
+  display:inline-block;
+  margin-right:5px;
+}
+#context-menu hr {
+  margin:2px 0px;
+  border-color:#555;
+}
 
 
 
