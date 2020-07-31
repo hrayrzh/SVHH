@@ -56,7 +56,7 @@ class Folder {
             // })
 
             folderLiElement.addEventListener('contextmenu', () => {
-                dragAndDrop(folderLiElement);
+                editDelete(folderLiElement);
             })
         })
         return folderNameInput
@@ -121,7 +121,7 @@ class File {
     changeContent() { }
 }
 
-function dragAndDrop(element) {
+function editDelete(element) {
     const div = document.createElement('div');
     div.classList.add('dragAndDrop');
     const editElement = document.createElement('button');
