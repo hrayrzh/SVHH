@@ -10,53 +10,29 @@
 <body>
 
 
- <div id="app">
+ <div id="app" style="height:100%; width:100%; overflow: hidden;">
         
-        <div class="folders" role="treeitem" aria-expanded="false" style=" width: 30%; height: 100%; background:black;">
+        <div class="folders" role="treeitem" aria-expanded="false" style="float: left;  width: 30%; height: 100%; background:black;">
             
             <ul id="myUL">
-  <li><span class="caret">Working Directory</span>
-      <ul class="nested"> 
-      
+                <li><span class="caret">Working Directory</span>
+                    <ul class="nested"> 
                     </ul>
-    <!--
-      <ul class="nested">
-      <li>Water</li>
-      <li>Coffee</li>
-      <li><span class="caret">Tea</span>
-        <ul class="nested">
-          <li>Black Tea</li>
-          <li>White Tea</li>
-          <li><span class="caret">Green Tea</span>
-            <ul class="nested">
-              <li>Sencha</li>
-              <li>Gyokuro</li>
-              <li>Matcha</li>
-              <li>Pi Lo Chun</li>
-            </ul>
-          </li>
-        </ul>
-      </li>
-    </ul>
--->
-  </li>
-</ul>
-            
-            
-            <!--<li  <i class="fa fa-plus"> </i>
-        <li> <i class="fa fa-folder" style="font-size:20px;color:lightgray;"> Root </i> </li> -->
-      <ul class='custom-menu'>
-  <li id="add_folder_id" data-action="add_folder">Add Folder</li>
-  <li id="add_file_id" data-action="add_file">Add File</li>
-  <li id="delete_id" data-action="delete_item">Delete</li>
-    </ul>
     
-       
+                </li>
+            </ul>
+            <ul class='custom-menu'>
+                <li id="add_folder_id" data-action="add_folder">Add Folder</li>
+                <li id="add_file_id" data-action="add_file">Add File</li>
+                <li id="delete_id" data-action="delete_item">Delete</li>
+            </ul>
         </div>
-        <div id="tabs" style=" background: red; width: 100%; height: 10%; top: 8px; position: absolute; margin-left: 30%;">
+     
+        <div class="txtarea" contenteditable="true" style="  white-space: pre; position: absolute; right: 0px; width: 70%; height: 100%;  border: 3px solid white; padding: 10px; background: #252525; color: white; top: 8px; " >
         </div>
-        <div id="txtarea" style=" background: red; width: 100%; height: 10%; top: 8px; position: absolute; margin-left: 30%; ">
+        <div id="tabs" style="float: left; background: red; width: 100%; height: 10%; top: 8px; position: relative; ">
         </div>
+
     </div>
      
     

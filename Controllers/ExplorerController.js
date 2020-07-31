@@ -28,6 +28,8 @@ class ExplorerController {
         document.getElementById("add_folder_id").addEventListener('click', () => {this.ctrlAddItem('folder')});
         document.getElementById("add_file_id").addEventListener('click', () => {this.ctrlAddItem('file')});
         document.getElementById("delete_id").addEventListener('click', () => {this.ctrlDeleteItem()});
+        
+        document.querySelector(".folders").addEventListener('click', () => {this.ctrlShowContent()});
     };
     
     setupEventListeners(item, type) {
@@ -146,6 +148,56 @@ class ExplorerController {
         this.view.deleteListItem(item);
 
     };
+
+    saveContent(item){
+
+        //let prevItem = this.currentItem;
+        //Check to undefined
+        if (item) {
+            let id = item.id;
+            if (!id) {
+                item = item.parentNode;
+                id = item.id;
+            }
+        
+            let file = this.fileModel.findItemById(+id);
+            if (file && file instanceof File)
+            {
+                let fileContent = document.querySelector(".txtarea").innerText;
+                file.saveContent(fileContent);
+            }
+        }
+        
+    };
+
+    showContent(item) {
+        if (item) {
+            let id = item.id;
+            if (!id) {
+                item = item.parentNode;
+                id = item.id;
+            }
+        
+            let file = this.fileModel.findItemById(+id);
+            if (file && file instanceof File)
+            {
+                let fileContent = file.getContent();
+                document.querySelector(".txtarea").innerText = fileContent;
+            }
+        }
+       
+    };
+
+    ctrlShowContent = () => {
+        // save previous file content;
+        this.saveContent(this.currentItem);
+        
+        this.currentItem = event.target;
+        //this.currentItem.style.background = 'gray';
+        
+        this.showContent(this.currentItem);
+    };
+
 }
 
 //const root = new Folder();
