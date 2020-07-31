@@ -4,16 +4,16 @@ class ExplorerController {
     constructor(view) {
         this.currentId = 0;        
         this.fileModel = new FilesModel(new Folder('root', this.currentId));
-        document.querySelector(".caret").id = 0;
+        //document.querySelector(".caret").id = 0;
         this.view = view;
         
         this.setupCustomEventListeners();
-        this.setupEventListeners( document.querySelector(".caret"), 'root');
+        this.setupEventListeners( document.getElementById("0"), 'root');
 
     };
     
     setupCustomEventListeners() {
-        document.querySelector(".folders").addEventListener('click', () => {this.ctrlShowContent()});        
+        document.querySelector(".explorer").addEventListener('click', () => {this.ctrlShowContent()});        
         document.getElementById("add_folder_id").addEventListener('click', () => {this.ctrlAddItem('folder')});
         document.getElementById("add_file_id").addEventListener('click', () => {this.ctrlAddItem('file')});
         document.getElementById("delete_id").addEventListener('click', () => {this.ctrlDeleteItem()});
@@ -25,12 +25,29 @@ class ExplorerController {
     };
     
     setupEventListeners(item, type) {
+        console.log(item);
+        console.log(type);
         item.addEventListener('contextmenu', (event) => {
             // Avoid the real one
             event.preventDefault();
             // Stop propogation of the event to its parents
             event.stopImmediatePropagation();
             $(".context-menu").hide();
+            
+            // Make inactive
+            let item = this.currentItem;
+            if (item) {
+                item.style.background = "#252525";
+                let id = item.id;
+                if (!id) {
+                    item = item.parentNode;
+                    if (item)
+                        item.style.background = "#252525";
+                    id = item.id;
+                }
+            }
+            
+            // Make this active
             
             this.currentItem = event.target;
     
@@ -58,10 +75,12 @@ class ExplorerController {
             $(".context-menu").show();
         });
         
-        if (type === 'folder'){
-            item.addEventListener("click", function() {
+        if (type === 'folder' || type === 'root'){
+            item.addEventListener("dblclick", function(event) {
+                // Stop propogation of the event to its parents
+                event.stopImmediatePropagation();
                 item.querySelector(".nested").classList.toggle("active");
-                item.querySelector(".nested").classList.toggle("caret-down");
+                item.querySelector(".caret").classList.toggle("caret-down");
             });  
         }
     };
@@ -124,11 +143,14 @@ class ExplorerController {
     saveContent(item){
         //Check to undefined
         if (item) {
+            item.style.background = "#252525";
             let id = item.id;
             if (!id) {
                 item = item.parentNode;
                 id = item.id;
             }
+            
+            item.style.background = "#252525";
         
             let file = this.fileModel.findItemById(+id);
             if (file && file instanceof File)
@@ -143,14 +165,18 @@ class ExplorerController {
     showContent(item) {
         //Check to undefined
         if (item) {
+                        
+            item.style.background = "#555";
             let id = item.id;
             if (!id) {
                 item = item.parentNode;
                 id = item.id;
             }
+            
+            item.style.background = "#555";
         
             let file = this.fileModel.findItemById(+id);
-            if (file && file instanceof File)
+            if (file /* && file instanceof File*/)
             {
                 let fileContent = file.getContent();
                 document.querySelector(".txtarea").innerText = fileContent;

@@ -5,17 +5,18 @@ class ExplorerView {
         //let childName = child.name;
         
         let nested = parent.parentElement.querySelector(".nested");
-        nested.classList.add("active");
-        parent.classList.add("caret-down");
+        if (nested)
+            nested.classList.add("active");
+        //parent.classList.add("caret-down");
         
         
         
         let html;
         if (type === 'folder') {
-            html = '<span class="caret">' + childName + '</span> <ul class="nested"> </ul>';
+            html = '<span class="caret"> <img src = "Images/folder.png"> ' + childName + '</span> <ul class="nested"> </ul>';
         }
         else {
-            html = childName;
+            html = '<span class="file"> <img src = "Images/file.png" alt> ' + childName + '</span>';
         }
 
         let newChild = document.createElement('li');

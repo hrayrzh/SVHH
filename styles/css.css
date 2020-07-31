@@ -17,6 +17,10 @@ ul, #myUL {
   user-select: none; /* Prevent text selection */
 }
 
+/*.caret:hover {
+  background:#555;
+}*/
+
 /* Create the caret/arrow with a unicode, and style it */
 .caret::before {
   content: "\25B6";
@@ -40,6 +44,15 @@ ul, #myUL {
   display: block;
 }
 
+
+
+/*.file:hover {
+  background:#555;
+}
+
+.li:hover {
+  background:#555;
+}*/
 
 
 
@@ -84,10 +97,12 @@ div {
     box-sizing: border-box;
 }
 img {
-    width: 7%;
-    height: 3%;
+    width: 25px;
+    height: 25px;
     cursor: pointer;
 }
+
+
 
 /* Tab */
 .tabLink {
@@ -140,10 +155,12 @@ img {
 
 
 /* Context menu */
-/*body {
-  margin:0px;
-  font-family:"Open Sans",sans-serif;
-}*/
+body {
+  /*margin:0px;*/
+  /*font-family:"Open Sans",sans-serif;*/
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+}
 #context-menu {
   position:absolute;
   z-index:10000;

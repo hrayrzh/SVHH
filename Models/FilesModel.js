@@ -3,7 +3,6 @@ class FilesModel {
     constructor(root) {
         this.root = root;
     }
-    
 
     findItemById(id) {
         if (id === 0)
@@ -45,7 +44,9 @@ class File {
 
     // GETTERS
 
-    getName() {}
+    getName() {
+        return this.name;
+    }
 
     getContent() {
         return this.content;
@@ -80,5 +81,18 @@ class Folder {
                 this.listOfChildren.splice(i, 1);
             } 
         }
+    }
+    
+    getName() {
+        return this.name;
+    }
+    
+    getContent() {
+        let children = "";
+        for (let i = 0; i < this.listOfChildren.length; ++i)
+        {
+            children += './' + this.listOfChildren[i].getName() + '\n'; 
+        }
+        return children;
     }
 }
