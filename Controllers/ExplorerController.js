@@ -135,6 +135,21 @@ class ExplorerController {
         this.showContent(currId);
     };
 
+    ctrlShowTabContent = (currId, tabElement) => {
+        // Set the selected tab as active one
+        this.setActiveTab(currId);
+
+        // Save previous file content;
+        let prevId = this.getElementId(this.currentItem);
+        this.saveContent(prevId);
+        
+        // Change the currentItem
+        this.changeCurrentItem(document.getElementById(currId));
+        
+        // Show the specific tab content
+        this.showContent(currId);
+    };
+
     // HELPERS
     getElementId(item) {
         // In case of it gets a nested item the dispatched event, get its parents id
@@ -169,21 +184,61 @@ class ExplorerController {
        }       
     };
 
+    changeCurrentItem(element) {
+        // Check to undefined
+        if (element) {
+            // Save previous file content;
+            let prevId = this.getElementId(this.currentItem);
+            this.saveContent(prevId);
+            
+            // Updated currebt element
+            this.currentItem = element;
+            this.setActiveElement(element);
+            
+            // Set related active tab
+            this.setActiveTab(element.id);
+        
+            // Show the specific tab content
+            this.showContent(element.id);
+        }
+    };
+
+    setActiveElement(element) {
+        // clear all active states
+        this.removeExplorerStyles();
+
+        // Set the element as active element
+        element.classList.add("item_active");
+    };
+
+    setActiveTab(tabId) {
+        // Remove all tabs styles/states
+        this.removeTabsStyles();
+    
+        // set selcted tab as active
+        if (tabId) {
+            let currTab = document.getElementById("tab" + tabId);
+            if (currTab) {
+                document.getElementById("tab" + tabId).classList.add("item_active");
+            }
+        }   
+    };
+
     removeTabsStyles() {
-        // Hide all elements with class="tabcontent" by default */
-        let i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
+        // Hide all elements with tabcontent by default */
+        let i;
+        let tabcontent = document.getElementsByClassName("tabcontent");
         for (i = 0; i < tabcontent.length; i++) {
             tabcontent[i].style.display = "none";
         }
 
         // Remove the background color of all tablinks/buttons
-        tablinks = document.getElementsByClassName("tablink");
+        let tablinks = document.getElementsByClassName("tablink");
         for (i = 0; i < tablinks.length; i++) {
             //tablinks[i].style.backgroundColor = "";
             tablinks[i].classList.remove("item_active");
         }        
-    }
+    };
 
     removeExplorerStyles() {
         // Remove any active state in explorer view
@@ -191,46 +246,7 @@ class ExplorerController {
         for (let i = 0; i < explorer.length; i++) {
             explorer[i].classList.remove("item_active");
         }   
-    }
-
-    ctrlShowTabContent = (currId, tabElement) => {
-        this.setActiveTab(currId);
-        // Reset the tabs states/styles
-        //this.removeTabsStyles();
-        
-        // Add the specific color to the button used to open the tab content
-        //tabElement.style.backgroundColor = this.bgColor;
-
-        // Save previous file content;
-        let prevId = this.getElementId(this.currentItem);
-        this.saveContent(prevId);
-        
-        // Change the currentItem
-        this.changeCurrentItem(document.getElementById(currId));
-        
-        // Show the specific tab content
-        this.showContent(currId);
     };
-
-    setActiveElement(element) {
-        // clear all active states
-        this.removeExplorerStyles();
-        // Set the element as active element
-        element.classList.add("item_active");
-        
-        //this.setActiveTab(this.getElementId(element));
-    }
-
-    setActiveTab(tabId) {
-        this.removeTabsStyles();
-        if (tabId) {
-            let currTab = document.getElementById("tab" + tabId);
-            if (currTab) {
-                document.getElementById("tab" + tabId).classList.add("item_active");
-                //this.ctrlShowTabContent(tabId, currTab);
-            }
-        }   
-    }
 
     removeTab(tabId) {
         if (tabId) {
@@ -239,32 +255,9 @@ class ExplorerController {
                 currTab.parentNode.removeChild(currTab);
             }
         }   
-    }
-
-    changeCurrentItem(element) {
-        if (element) {
-            // Save previous file content;
-            let prevId = this.getElementId(this.currentItem);
-            //this.fileModel.saveContent(prevId, document.querySelector(".txtarea").innerText);
-            this.saveContent(prevId);
-            
-            this.currentItem = element;
-            this.setActiveElement(element);
-            
-            this.setActiveTab(element.id);
-        
-            // Show the specific tab content
-            this.showContent(element.id);
-        }
-    }
+    };
 }
 
 function tabClicked(tabId, tabElement) {
     explorerController.ctrlShowTabContent(tabId, tabElement);
 }
-
-//const root = new Folder();
-// TODO: to be changed to module to be a singlton
-let explorerView = new ExplorerView();
-//let fileModel = new FilesModel();
-let explorerController = new ExplorerController(explorerView);
