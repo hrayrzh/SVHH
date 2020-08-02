@@ -33,6 +33,29 @@ class FilesModel {
 
     }
     
+    addChild(parentId, newItem) {
+        let parentFolder = this.findItemById(+parentId);
+        if (parentFolder) {
+            parentFolder.addChild(newItem);
+        }
+    }
+    
+    removeChild(parentId, itemId) {
+        let parentFolder = this.findItemById(+parentId);
+        if (parentFolder) {
+            parentFolder.removeChild(+itemId);
+        }
+    }
+    
+    saveContent(id, fileContent){
+        //Check to undefined
+        if (id) {
+            let file = this.findItemById(+id);
+            if (file && file instanceof File) {
+                file.saveContent(fileContent);
+            }
+        }        
+    }
 }
 
 class File {

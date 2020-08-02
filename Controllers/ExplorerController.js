@@ -70,130 +70,57 @@ class ExplorerController {
         
         item.addEventListener('click', () => {this.ctrlShowContent()}); 
     };
-    
-    changeCurrentItem(element) {
-        if (element) {
-            // Save previous file content;
-            let prevId = this.getElementId(this.currentItem);
-            this.saveContent(prevId);
-            
-            this.currentItem = element;
-            this.setActiveElement(element);
-            
-            this.setActiveTab(element.id);
-        
-            // Show the specific tab content
-            this.showContent(element.id);
-        }
-    }
 
+    // EVENT LISTENERS
     ctrlAddItem = (type) => {
+        // Hide the context menu
+        $(".context-menu").hide();
+        
+        // Prompt user to set File/Folder name
         let childName = prompt("Insert " + type + " name");
-        let parent = this.currentItem; 
 
         // Open parent tree
+        let parent = this.currentItem;
         parent.querySelector(".caret").classList.add("caret-down");
         
         // Add the item to the UI
         ++this.currentId;
         let newListItem = this.view.addListItem(parent, childName, type, this.currentId);
 
-        //this.changeCurrentItem(newListItem);
-        //this.setupEventListeners(newListItem, type);
-
         // Create the file/folder item
         let newItem = (type === 'folder') ? new Folder(childName, this.currentId)
                                           : new File(childName, this.currentId);
 
-        let parentId = parent.id;
-        if (!parentId)
-            parentId = parent.parentNode.id;
+        // Add the item to filesModel
+        let parentId = this.getElementId(parent);
+        this.fileModel.addChild(parentId, newItem);
         
-        let parentFolder = this.fileModel.findItemById(+parentId);
-        if (parentFolder)
-        {
-            parentFolder.addChild(newItem);
-        }
-        
+        // Update current item / add event listeners to it        
         this.changeCurrentItem(newListItem);
         this.setupEventListeners(newListItem, type);
-        
     };
 
     ctrlDeleteItem = () => {
+        // Get the item to be deleted
         let item = this.currentItem;
+        let itemId = this.getElementId(item);
 
-        let itemId = item.id;
-        if (!itemId) {
-            item = item.parentNode;
-            itemId = item.id;
-        }
-            
+        // Get its parent item (id)
+        let parentId = this.getElementId(item.parentNode);
         
-        let parentItem = item.parentNode;
-        let parentId = parentItem.id;
-        if (!parentId)
-            parentId = parentItem.parentNode.id;
-        
+        // Remove the item from filesModel
+        this.fileModel.removeChild(parentId, itemId);
 
-        
-        let parentFolder = this.fileModel.findItemById(+parentId);
-        if (parentFolder)
-        {
-            parentFolder.removeChild(+itemId);
-        }
-        
-        // remove from the UI
+        // Remove from the UI
         this.view.deleteListItem(item);
         
-        // remove tab
+        // Remove tab
+        // TODO: remove children tabs
         this.removeTab(itemId);
     };
 
-    saveContent(id){
-        //Check to undefined
-        if (id) {
-            let file = this.fileModel.findItemById(+id);
-            if (file && file instanceof File)
-            {
-                let fileContent = document.querySelector(".txtarea").innerText;
-                file.saveContent(fileContent);
-            }
-        }        
-    };
-
-    getElementId(item) {
-        //???
-        let id;
-        if (item) {
-            id = item.id;
-            if (!id) {
-                item = item.parentNode;
-                id = item.id;
-            }
-        }
-        return id;
-    }
-
-
-    showContent(id) {
-        //Check to undefined
-        if (id) {
-            let file = this.fileModel.findItemById(+id);
-            if (file && file instanceof File)
-            {
-                let fileContent = file.getContent();
-                document.querySelector(".txtarea").innerText = fileContent;
-                document.querySelector(".txtarea").contentEditable = "true";
-            }
-            else {
-                document.querySelector(".txtarea").innerText = "";
-                document.querySelector(".txtarea").contentEditable = "false";
-            }
-       }       
-    };
-
     ctrlShowContent = () => {
+        // Stop propogation of the event to its parents
         event.stopImmediatePropagation();
         
         // save previous file content;
@@ -203,8 +130,43 @@ class ExplorerController {
         // Set active current item
         this.changeCurrentItem(event.currentTarget);
         
+        // Show current item realed content
         let currId = this.getElementId(this.currentItem);
         this.showContent(currId);
+    };
+
+    // HELPERS
+    getElementId(item) {
+        // In case of it gets a nested item the dispatched event, get its parents id
+        let id;
+        if (item) {
+            id = item.id;
+            if (!id) {
+                item = item.parentNode;
+                id = item.id;
+            }
+        }
+        return id;
+    };
+
+    saveContent(id) {
+        this.fileModel.saveContent(id, document.querySelector(".txtarea").innerText);
+    };
+
+    showContent(id) {
+        //Check to undefined
+        if (id) {
+            let file = this.fileModel.findItemById(+id);
+            if (file && file instanceof File)
+            {
+                document.querySelector(".txtarea").innerText = file.getContent();
+                document.querySelector(".txtarea").contentEditable = "true";
+            }
+            else {
+                document.querySelector(".txtarea").innerText = "";
+                document.querySelector(".txtarea").contentEditable = "false";
+            }
+       }       
     };
 
     removeTabsStyles() {
@@ -277,6 +239,23 @@ class ExplorerController {
                 currTab.parentNode.removeChild(currTab);
             }
         }   
+    }
+
+    changeCurrentItem(element) {
+        if (element) {
+            // Save previous file content;
+            let prevId = this.getElementId(this.currentItem);
+            //this.fileModel.saveContent(prevId, document.querySelector(".txtarea").innerText);
+            this.saveContent(prevId);
+            
+            this.currentItem = element;
+            this.setActiveElement(element);
+            
+            this.setActiveTab(element.id);
+        
+            // Show the specific tab content
+            this.showContent(element.id);
+        }
     }
 }
 
