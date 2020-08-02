@@ -118,12 +118,11 @@ class ExplorerController {
         // Remove the item from filesModel
         this.fileModel.removeChild(parentId, itemId);
 
+        // Remove tab / children related tabs
+        this.removeChildtabs(item);
+        
         // Remove from the UI
         this.view.deleteListItem(item);
-        
-        // Remove tab
-        // TODO: remove children tabs
-        this.removeTab(itemId);
     };
 
     ctrlShowContent = () => {
@@ -277,6 +276,15 @@ class ExplorerController {
             }
         }   
     };
+
+    removeChildtabs(parent) {
+        let nestedArray = parent.children;
+        for (let i = 0; i < nestedArray.length; ++i) {
+            this.removeChildtabs(nestedArray[i]);    
+        }
+        
+        this.removeTab(parent.id);
+    }
 }
 
 function tabClicked(tabId, tabElement) {
