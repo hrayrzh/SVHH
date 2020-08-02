@@ -9,7 +9,24 @@
 	text-decoration: none;
 }
 
+#logo{
+	  text-align: center;
+    background-color: #0F192A;
+    color: #FFAA3E;
+    height: 10%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-family: cursive;
+    font-size: 25px;
+    line-height: 0.8;
+}
 
+#logo p{
+	color: #A6E22E;
+	font-family: monospace;
+	font-size: 20px;
+}
 /**********/
 /*BODY End*/
 /**********/
@@ -21,9 +38,11 @@
 #files{
 	height: 100%;
 	width: 25%;
-	background-color: #faebd7;
+	background-color: #252533;
 	position: absolute;
 	left: 0;
+	overflow: hidden;
+	color: white;
 }
 
 #files ul{
@@ -57,23 +76,34 @@
 	cursor: pointer;
 }
 
+
 #create img{
 	height: 20px;
 }
 
 #folders{
-	padding: 15px 50px;
-	font-size: 20px;
+	padding: 15px 15px;
+	font-size: 15px;
+	overflow-y: scroll;
+	height: 90%;
 }
 
 #folders img{
 	height: 20px;
+	margin-right: 5px;
 }
 
-.edit, .trash{
-	float: right;
-  margin: 0 5px;
+#folders li>div{
+	display: flex;
+	justify-content: space-between;
+	margin: 15px 0px;
 }
+
+#folders li>div>span{
+	display: inline-flex;
+	align-items: center;
+}
+
 
 .closed{
 	transform: rotate(270deg);
@@ -93,7 +123,7 @@
 #tabs{
 	height: 10%;
 	width: 75%;
-	background-color: cadetblue;
+	background-color: #252533;
 	position: absolute;
 	right: 0;
 	top: 0;
@@ -112,7 +142,20 @@
   align-items: center;
   margin: 0 10px;
   box-shadow: 7px 4px 11px #0b2a05;
+	cursor: pointer;
 }
+
+.tab:hover{
+	color: antiquewhite;
+}
+
+.tab:active{    
+	box-shadow: inset 0px 0px 0px #0b2a05;
+  border: 1px solid #108e9e;
+}
+
+
+
 
 .tab img{
 	height: 20px;
