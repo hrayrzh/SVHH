@@ -2,8 +2,9 @@
 class FilesModel {
     constructor(root) {
         this.root = root;
-    }
+    };
 
+    // GETTERS
     findItemById(id) {
         if (id === 0)
             return this.root;
@@ -12,7 +13,7 @@ class FilesModel {
             return undefined;
         
         return this.find(this.root, id);
-    }
+    };
     
     find(root, id) {
         if (root.id === id) {
@@ -28,24 +29,37 @@ class FilesModel {
                 } 
             }
         }
-        
         return undefined;
-
-    }
+    };
     
+    findItem(parentId, childName) {
+        let parentFolder = this.findItemById(+parentId);
+        if (parentFolder && parentFolder.listOfChildren) {
+            for (let i = 0; i < parentFolder.listOfChildren.length; ++i)
+            {
+                let curr = parentFolder.listOfChildren[i];
+                if (curr.getName() === childName) {
+                    return curr;
+                } 
+            }
+        }
+        return undefined;
+    };
+    
+    // MODIFIERS
     addChild(parentId, newItem) {
         let parentFolder = this.findItemById(+parentId);
         if (parentFolder) {
             parentFolder.addChild(newItem);
         }
-    }
+    };
     
     removeChild(parentId, itemId) {
         let parentFolder = this.findItemById(+parentId);
         if (parentFolder) {
             parentFolder.removeChild(+itemId);
         }
-    }
+    };
     
     saveContent(id, fileContent){
         //Check to undefined
@@ -55,7 +69,7 @@ class FilesModel {
                 file.saveContent(fileContent);
             }
         }        
-    }
+    };
 }
 
 class File {
@@ -63,26 +77,24 @@ class File {
         this.name = name;
         this.id = id;
         this.content = "";
-    }
+    };
 
     // GETTERS
-
     getName() {
         return this.name;
-    }
+    };
 
     getContent() {
         return this.content;
-    }
+    };
 
 
     // SETTERS
-
     rename() {}
 
     saveContent(content) {
         this.content = content;
-    }
+    };
 }
 
 // Folder class
@@ -91,24 +103,12 @@ class Folder {
         this.name = name;
         this.id = id;
         this.listOfChildren = [];
-    }
+    };
     
-    addChild(newItem) {
-        this.listOfChildren.push(newItem);
-    }
-    
-    removeChild(childId) {
-        for (let i = 0; i < this.listOfChildren.length; ++i)
-        {
-            if (this.listOfChildren[i].id === childId) {
-                this.listOfChildren.splice(i, 1);
-            } 
-        }
-    }
-    
+    // GETTERS
     getName() {
         return this.name;
-    }
+    };
     
     getContent() {
         let children = "";
@@ -117,5 +117,21 @@ class Folder {
             children += './' + this.listOfChildren[i].getName() + '\n'; 
         }
         return children;
-    }
+    };
+    
+    // MODIFIERS
+    addChild(newItem) {
+        this.listOfChildren.push(newItem);
+    };
+    
+    removeChild(childId) {
+        for (let i = 0; i < this.listOfChildren.length; ++i)
+        {
+            if (this.listOfChildren[i].id === childId) {
+                this.listOfChildren.splice(i, 1);
+            } 
+        }
+    };
+    
+    
 }

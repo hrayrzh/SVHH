@@ -76,11 +76,18 @@ class ExplorerController {
         // Hide the context menu
         $(".context-menu").hide();
         
+        let parent = this.currentItem;
+        let parentId = this.getElementId(parent);
+
         // Prompt user to set File/Folder name
         let childName = prompt("Insert " + type + " name");
+        
+        // check the user input
+        if (!this.isInputValid(parentId, childName)) {
+            return;
+        }
 
         // Open parent tree
-        let parent = this.currentItem;
         parent.querySelector(".caret").classList.add("caret-down");
         
         // Add the item to the UI
@@ -92,7 +99,7 @@ class ExplorerController {
                                           : new File(childName, this.currentId);
 
         // Add the item to filesModel
-        let parentId = this.getElementId(parent);
+        
         this.fileModel.addChild(parentId, newItem);
         
         // Update current item / add event listeners to it        
@@ -163,6 +170,20 @@ class ExplorerController {
         }
         return id;
     };
+
+    isInputValid(parentId, childName) {
+        if (!childName || childName === null) {
+            alert("ERROR: Wrong input!");
+            return false;
+        }
+        
+        let existedItem = this.fileModel.findItem(parentId, childName);
+        if (existedItem) {
+            alert("ERROR: The specified item already exists!");
+            return false;
+        }
+        return true;
+    }
 
     saveContent(id) {
         this.fileModel.saveContent(id, document.querySelector(".txtarea").innerText);
