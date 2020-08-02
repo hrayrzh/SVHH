@@ -16,6 +16,10 @@ class ExplorerView {
             html = '<span class="caret"> <img src = "Images/folder.png"> ' + childName + '</span> <ul class="nested"> </ul>';
         }
         else {
+                    //Add a tab item
+            let tabHtml = '<button class="tablink" id="tab' + id + '" onclick="tabClicked(' + id + ', this)">' + childName + '</button>';
+            document.getElementById("tabarea").insertAdjacentHTML('beforeend', tabHtml);
+            
             html = '<span class="file"> <img src = "Images/file.png" alt> ' + childName + '</span>';
         }
 
@@ -23,6 +27,11 @@ class ExplorerView {
         newChild.innerHTML = html;
         newChild.id = id;
         nested.appendChild(newChild);
+        
+        
+                
+
+        
         
         return newChild;
     };

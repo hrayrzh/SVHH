@@ -1,19 +1,18 @@
 // Explrer controller class
-class ExplorerController {
-    
+class ExplorerController {    
     constructor(view) {
         this.currentId = 0;        
         this.fileModel = new FilesModel(new Folder('root', this.currentId));
-        //document.querySelector(".caret").id = 0;
         this.view = view;
         
         this.setupCustomEventListeners();
         this.setupEventListeners( document.getElementById("0"), 'root');
-
+        
+        this.contextMenuOffset = 100;
+        this.bgColor = "#141414";
     };
     
     setupCustomEventListeners() {
-        document.querySelector(".explorer").addEventListener('click', () => {this.ctrlShowContent()});        
         document.getElementById("add_folder_id").addEventListener('click', () => {this.ctrlAddItem('folder')});
         document.getElementById("add_file_id").addEventListener('click', () => {this.ctrlAddItem('file')});
         document.getElementById("delete_id").addEventListener('click', () => {this.ctrlDeleteItem()});
@@ -25,31 +24,16 @@ class ExplorerController {
     };
     
     setupEventListeners(item, type) {
-        console.log(item);
-        console.log(type);
         item.addEventListener('contextmenu', (event) => {
             // Avoid the real one
             event.preventDefault();
+            
             // Stop propogation of the event to its parents
             event.stopImmediatePropagation();
             $(".context-menu").hide();
             
-            // Make inactive
-            let item = this.currentItem;
-            if (item) {
-                item.style.background = "#252525";
-                let id = item.id;
-                if (!id) {
-                    item = item.parentNode;
-                    if (item)
-                        item.style.background = "#252525";
-                    id = item.id;
-                }
-            }
-            
             // Make this active
-            
-            this.currentItem = event.target;
+            this.changeCurrentItem(event.currentTarget);
     
             // Create/edit contextmenu
             if (type === 'root') {
@@ -68,7 +52,7 @@ class ExplorerController {
             }
 
             var contextElement = document.getElementById("context-menu");
-            contextElement.style.top = event.pageY + "px";
+            contextElement.style.top = event.pageY - this.contextMenuOffset + "px";
             contextElement.style.left = event.pageX + "px";
             contextElement.classList.add("active");
             
@@ -83,18 +67,39 @@ class ExplorerController {
                 item.querySelector(".caret").classList.toggle("caret-down");
             });  
         }
+        
+        item.addEventListener('click', () => {this.ctrlShowContent()}); 
     };
     
+    changeCurrentItem(element) {
+        if (element) {
+            // Save previous file content;
+            let prevId = this.getElementId(this.currentItem);
+            this.saveContent(prevId);
+            
+            this.currentItem = element;
+            this.setActiveElement(element);
+            
+            this.setActiveTab(element.id);
+        
+            // Show the specific tab content
+            this.showContent(element.id);
+        }
+    }
 
     ctrlAddItem = (type) => {
         let childName = prompt("Insert " + type + " name");
         let parent = this.currentItem; 
 
+        // Open parent tree
+        parent.querySelector(".caret").classList.add("caret-down");
+        
         // Add the item to the UI
         ++this.currentId;
         let newListItem = this.view.addListItem(parent, childName, type, this.currentId);
-        
-        this.setupEventListeners(newListItem, type);
+
+        //this.changeCurrentItem(newListItem);
+        //this.setupEventListeners(newListItem, type);
 
         // Create the file/folder item
         let newItem = (type === 'folder') ? new Folder(childName, this.currentId)
@@ -109,6 +114,9 @@ class ExplorerController {
         {
             parentFolder.addChild(newItem);
         }
+        
+        this.changeCurrentItem(newListItem);
+        this.setupEventListeners(newListItem, type);
         
     };
 
@@ -137,64 +145,143 @@ class ExplorerController {
         
         // remove from the UI
         this.view.deleteListItem(item);
-
+        
+        // remove tab
+        this.removeTab(itemId);
     };
 
-    saveContent(item){
+    saveContent(id){
         //Check to undefined
-        if (item) {
-            item.style.background = "#252525";
-            let id = item.id;
-            if (!id) {
-                item = item.parentNode;
-                id = item.id;
-            }
-            
-            item.style.background = "#252525";
-        
+        if (id) {
             let file = this.fileModel.findItemById(+id);
             if (file && file instanceof File)
             {
                 let fileContent = document.querySelector(".txtarea").innerText;
                 file.saveContent(fileContent);
             }
-        }
-        
+        }        
     };
 
-    showContent(item) {
-        //Check to undefined
+    getElementId(item) {
+        //???
+        let id;
         if (item) {
-                        
-            item.style.background = "#555";
-            let id = item.id;
+            id = item.id;
             if (!id) {
                 item = item.parentNode;
                 id = item.id;
             }
-            
-            item.style.background = "#555";
-        
+        }
+        return id;
+    }
+
+
+    showContent(id) {
+        //Check to undefined
+        if (id) {
             let file = this.fileModel.findItemById(+id);
-            if (file /* && file instanceof File*/)
+            if (file && file instanceof File)
             {
                 let fileContent = file.getContent();
                 document.querySelector(".txtarea").innerText = fileContent;
+                document.querySelector(".txtarea").contentEditable = "true";
             }
-        }
-       
+            else {
+                document.querySelector(".txtarea").innerText = "";
+                document.querySelector(".txtarea").contentEditable = "false";
+            }
+       }       
     };
 
     ctrlShowContent = () => {
+        event.stopImmediatePropagation();
+        
         // save previous file content;
-        this.saveContent(this.currentItem);
+        let prevId = this.getElementId(this.currentItem);
+        this.saveContent(prevId);
+                
+        // Set active current item
+        this.changeCurrentItem(event.currentTarget);
         
-        this.currentItem = event.target;
-        //this.currentItem.style.background = 'gray';
-        
-        this.showContent(this.currentItem);
+        let currId = this.getElementId(this.currentItem);
+        this.showContent(currId);
     };
 
+    removeTabsStyles() {
+        // Hide all elements with class="tabcontent" by default */
+        let i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        // Remove the background color of all tablinks/buttons
+        tablinks = document.getElementsByClassName("tablink");
+        for (i = 0; i < tablinks.length; i++) {
+            //tablinks[i].style.backgroundColor = "";
+            tablinks[i].classList.remove("item_active");
+        }        
+    }
+
+    removeExplorerStyles() {
+        // Remove any active state in explorer view
+        let explorer = document.getElementsByTagName("li");
+        for (let i = 0; i < explorer.length; i++) {
+            explorer[i].classList.remove("item_active");
+        }   
+    }
+
+    ctrlShowTabContent = (currId, tabElement) => {
+        this.setActiveTab(currId);
+        // Reset the tabs states/styles
+        //this.removeTabsStyles();
+        
+        // Add the specific color to the button used to open the tab content
+        //tabElement.style.backgroundColor = this.bgColor;
+
+        // Save previous file content;
+        let prevId = this.getElementId(this.currentItem);
+        this.saveContent(prevId);
+        
+        // Change the currentItem
+        this.changeCurrentItem(document.getElementById(currId));
+        
+        // Show the specific tab content
+        this.showContent(currId);
+    };
+
+    setActiveElement(element) {
+        // clear all active states
+        this.removeExplorerStyles();
+        // Set the element as active element
+        element.classList.add("item_active");
+        
+        //this.setActiveTab(this.getElementId(element));
+    }
+
+    setActiveTab(tabId) {
+        this.removeTabsStyles();
+        if (tabId) {
+            let currTab = document.getElementById("tab" + tabId);
+            if (currTab) {
+                document.getElementById("tab" + tabId).classList.add("item_active");
+                //this.ctrlShowTabContent(tabId, currTab);
+            }
+        }   
+    }
+
+    removeTab(tabId) {
+        if (tabId) {
+            let currTab = document.getElementById("tab" + tabId);
+            if (currTab) {
+                currTab.parentNode.removeChild(currTab);
+            }
+        }   
+    }
+}
+
+function tabClicked(tabId, tabElement) {
+    explorerController.ctrlShowTabContent(tabId, tabElement);
 }
 
 //const root = new Folder();

@@ -8,7 +8,7 @@ class FilesModel {
         if (id === 0)
             return this.root;
         
-        if (!id)
+        if (id === undefined)
             return undefined;
         
         return this.find(this.root, id);
