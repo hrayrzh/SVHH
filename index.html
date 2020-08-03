@@ -1,75 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Team 2 Editor</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link rel="stylesheet" href="styles/css.css">
-    <link rel="stylesheet" href="./lib/codemirror.css">
-		<link rel="stylesheet" href="./lib/zenburn.css">
-<!--		<link rel="stylesheet" href="./lib/css.css">-->
-         
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Team 2 Editor</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="styles/css.css">
+	<link rel="stylesheet" href="./lib/codemirror.css">
+	<link rel="stylesheet" href="./lib/zenburn.css">
 </head>
 <body>
-
-    <div id="app">
-     	
-     			<div class="folders" role="treeitem" aria-expanded="false">
-     			<div id="files">
-						<div id="logo" aria-expanded="false">
-							<img src="./img/png/logo.png" alt="">
+	<div id="app">
+		<div class="folders" role="treeitem" aria-expanded="false">
+			<div id="files">
+				<div id="logo" aria-expanded="false">
+					<img src="./img/png/logo.png" alt="">
+				</div>
+				<ul id="myUL" class="explorer">
+					<li id="0">
+						<div>
+							<span class="caret"> <img src = "./img/png/025-folder.png" > Working Directory</span>
 						</div>
-        
-        
+						<ul class="nested">
+						</ul>
 
-            <ul id="myUL" class="explorer">
-                <li id = "0" >
-                   <div>
-                    	<span class="caret"> <img src = "./img/png/025-folder.png" > Working Directory</span>
-                    </div>
-                    <ul class="nested"> 
-                    </ul>
-    
-                </li>
-            </ul>
-        
-            <div id="context-menu">
-                <div id="add_folder_id" class="item">
-                    <i class="fa fa-folder"></i> New Folder
-                </div>
-                <div id="add_file_id" class="item">
-                    <i class="fa fa-file"></i> New File
-                </div>
-                <div id="delete_id" class="item">
-                    <i class="fa fa-trash-o"></i> Delete
-                </div>
-            </div>
-            
-        </div>
-        </div>
-     
-        <!--  border: 3px solid white; -->
-        <div id="tabarea" style="background-color: #555; ">
+					</li>
+				</ul>
+				<div id="context-menu">
+					<div id="add_folder_id" class="item">
+						<i class="fa fa-folder"></i> New Folder
+					</div>
+					<div id="add_file_id" class="item">
+						<i class="fa fa-file"></i> New File
+					</div>
+					<div id="delete_id" class="item">
+						<i class="fa fa-trash-o"></i> Delete
+					</div>
 				</div>
-       	<div id="txtarea" >
-				<textarea id="myTextArea" class="txtarea"></textarea>
-				</div>
-        <!--  for contetx menu only -->
-<!--
-        <div class="txtarea" contenteditable="false" style=" overflow: scroll; white-space: pre; position: absolute; right: 0px; width: 75%; height: 115%;  padding: 10px; background: #141414; background-color: #141414;color: white; top: 55px; " >
-        </div>
--->
-    </div>
-    
-    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    
+			</div>
+		</div>
+		<div id="tabarea" style="background-color: #555; ">
+		</div>
+		<div id="txtarea">
+			<textarea id="myTextArea" class="txtarea"></textarea>
+		</div>
+	</div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="./lib/codemirror.js"></script>
+	<script src="./lib/javascript.js"></script>
+	<script src="Models/FilesModel.js"></script>
+	<script src="Views/ExplorerView.js"></script>
+	<script src="Controllers/ExplorerController.js"></script>
+	<script src="Controllers/MainController.js"></script>
 </body>
-   	<script src="./lib/codemirror.js"></script>
-		<script src="./lib/javascript.js"></script>
-    <script src="Models/FilesModel.js"></script>
-    <script src="Views/ExplorerView.js"></script>
-    <script src="Controllers/ExplorerController.js"></script>
-    <script src="Controllers/MainController.js"></script>
-
 </html>
