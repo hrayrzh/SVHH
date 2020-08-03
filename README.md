@@ -1,5 +1,5 @@
 # SVHH Text editor
-<img src="https://github.com/hrayrzh/SVHH/blob/master/Images/SVHH_Editor.png">
+<img src="https://github.com/hrayrzh/SVHH/blob/master/Images/SVHH_Editor.PNG">
 
 # ABOUT TEXT EDITOR
 
