@@ -22,3 +22,7 @@ The root folder ("Working Directory") is not removable, all other items can be r
 <img src="https://github.com/hrayrzh/SVHH/blob/master/img/Images/extension.png">
 
 The extension of new created file must be .js, .html, .css or .txt. By  default extension is .txt if it is not specified. We need it for extentions icon.
+
+# LIVE PAGE LINK
+
+<p> <a href="https://hrayrzh.github.io/SVHH/">SVHH JS editor</a> </p>
