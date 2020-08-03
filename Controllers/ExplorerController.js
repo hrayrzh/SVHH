@@ -59,8 +59,10 @@ class ExplorerController {
                 document.getElementById("add_file_id").style.display = "block";
                 document.getElementById("delete_id").style.display = "block"
             }
-
-            var contextElement = document.getElementById("context-menu");
+						
+            const contextElement = document.getElementById("context-menu");
+						contextElement.style.top = event.pageY + "px";
+            contextElement.style.left = event.pageX + "px";
             contextElement.classList.add("active");
             
             $(".context-menu").show();
