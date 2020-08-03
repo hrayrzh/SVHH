@@ -18,3 +18,7 @@ Each file has its asosiated tab (on the right upper part of the applicaton).
 File's content is automatically saved during switch from one file to another, so you can go back and edit it again.
 
 The root folder ("Working Directory") is not removable, all other items can be removed.
+
+<img src="https://github.com/hrayrzh/SVHH/blob/master/img/Images/extension.png">
+
+The extension of new created file must be .js, .html, .css or .txt. By  default extension is .txt if it is not specified. We need it for extentions icon.
