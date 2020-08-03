@@ -1,3 +1,12 @@
+		const myTextArea = document.getElementById("myTextArea");
+  	const editor = CodeMirror.fromTextArea(myTextArea, {
+    lineNumbers: true,
+		theme: "zenburn",
+		mode: {name: "javascript", json: true}
+  });
+
+
+
 // Explrer controller class
 class ExplorerController {    
     constructor(view) {
@@ -52,8 +61,6 @@ class ExplorerController {
             }
 
             var contextElement = document.getElementById("context-menu");
-            contextElement.style.top = event.pageY - this.contextMenuOffset + "px";
-            contextElement.style.left = event.pageX + "px";
             contextElement.classList.add("active");
             
             $(".context-menu").show();
@@ -81,7 +88,10 @@ class ExplorerController {
 
         // Prompt user to set File/Folder name
         let childName = prompt("Insert " + type + " name");
-        
+        if(type === 'folder' && childName.includes('.')) {
+					alert('Invalid folder name');
+					return false
+				}
         // check the user input
         if (!this.isInputValid(parentId, childName)) {
             return;
@@ -185,7 +195,7 @@ class ExplorerController {
     }
 
     saveContent(id) {
-        this.fileModel.saveContent(id, document.querySelector(".txtarea").innerText);
+        this.fileModel.saveContent(id, editor.getDoc().getValue());
     };
 
     showContent(id) {
@@ -194,12 +204,12 @@ class ExplorerController {
             let file = this.fileModel.findItemById(+id);
             if (file && file instanceof File)
             {
-                document.querySelector(".txtarea").innerText = file.getContent();
-                document.querySelector(".txtarea").contentEditable = "true";
+                editor.getDoc().setValue(file.getContent());
+//                document.querySelector(".txtarea").contentEditable = "true";
             }
             else {
-                document.querySelector(".txtarea").innerText = "";
-                document.querySelector(".txtarea").contentEditable = "false";
+                editor.getDoc().setValue('');
+//                document.querySelector(".txtarea").contentEditable = "false";
             }
        }       
     };

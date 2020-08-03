@@ -1,40 +1,88 @@
+*{
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	text-decoration: none;
+}
+
+body {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 16px;
+}
+
+
+
+/*********************/
+/* LOGO setion start */
+/*********************/
+
 #logo{
-	  text-align: center;
-    background-color: #555;
-    color: #FFAA3E;
-    /*height: 100px;*/
-    max-height: 100px;
-    min-height: 100px;
-    max-width: 400px;
-    min-width: 400px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    font-family: cursive;
-    font-size: 25px;
-    line-height: 0.8;
-    top: 10px;
+    background-color: #3f3f3f;
+    height: 10%;
+		display: flex;
+		justify-content: center;
 }
 
-#logo p{
-	color: #A6E22E;
-	font-family: monospace;
-	font-size: 20px;
-    top: 10px;
+#logo img{
+	height: 100%;
+ 	width: auto;
+}
+
+/*******************/
+/* LOGO setion end */
+/*******************/
+
+
+
+/************************/
+/* FOLDERS setion start */
+/************************/
+#myUL{
+	padding: 5px;
+}
+
+ img, #tabarea img {
+	height: 15px;
+	cursor: pointer;
 }
 
 
-/* Tree View */
-
-/* Remove default bullets */
-ul, #myUL {
-  list-style-type: none;
+.file {
+  background-color: inherit;
 }
 
-/* Remove margins and padding from the parent ul */
-#myUL {
-  margin: 0;
-  padding: 0;
+#files{
+	background-color: #555;
+	height: 100%;
+	width: 25%;
+	position: absolute;
+	left: 0;
+	overflow: hidden;
+}
+
+
+#files{
+	height: 100%;
+	width: 25%;
+	position: absolute;
+	left: 0;
+	overflow: hidden;
+	color: white;
+}
+
+#files ul{
+	list-style-type: none;
+}
+
+#files li{
+	cursor: pointer;
+	margin: 10px 0;
+	margin: 0 0.5%;
+	padding: 5px;
+}
+
+#files li ul{
+	padding-left: 30px;
 }
 
 /* Style the caret/arrow */
@@ -44,11 +92,6 @@ ul, #myUL {
     
   background-color: inherit;
 }
-
-/*.caret:hover {
-  background:#555;
-}*/
-
 /* Create the caret/arrow with a unicode, and style it */
 .caret::before {
   content: "\25B6";
@@ -72,127 +115,7 @@ ul, #myUL {
   display: block;
 }
 
-
-
-/*.file:hover {
-  background:#555;
-}
-
-.li:hover {
-  background:#555;
-}*/
-
-
-
-
-
-* {
-    margin: 0em;
-    /*padding: 0em;*/ 
-    color: #ffffff;
-    background-color: #555;
-}
-#explorer {
-    width: 20%;
-    height: 100%;
-    background-color: #252525;
-    position: absolute;
-}
-/*
-#tab {
-    width: 100%;
-    height: 20%;
-    margin-left: 20%;
-    background-color: #202020;
-    position: absolute;
-}
-
-.tabLink {
-    margin-top: 80px;
-}
- */
-#editor {
-    width: 100%;
-    height: 100%;
-    margin-left: 20%;
-    margin-top: 8%;
-    position: absolute;
-    background-color: #141414;
-}
-
-div {
-    color: #ffffff;
-    box-sizing: border-box;
-    background-color: inherit;
-}
-img {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    background-color: inherit;
-}
-
-
-
-/* Tab */
-/*
-.tabLink {
-    width: 10%;
-    height: 30px;
-    margin: auto;
-    margin-top: 75px;
-    text-align: center;
-    overflow: hidden;
-    border: 1px solid #ccc;
-    background-color: #080808;
-  }
-  
-  /* Style the buttons inside the tab *\/
-  .tabLink button {
-    background-color: #080808;
-    float: left;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    padding: 14px 16px;
-    transition: 0.3s;
-    font-size: 17px;
-  }
-  
-  /* Change background color of buttons on hover *\/
-  .tabLink button:hover {
-    background-color: #080808;
-  }
-  
-  /* Create an active/current tablink class *\/
-  .tabLink button.active {
-    background-color: #ccc;
-  }
-  
-  /* Style the tab content *\/
-  .tabcontent {
-    display: none;
-    padding: 6px 12px;
-    border: 1px solid #ccc;
-    border-top: none;
-  }
-*/
-
-  /* Editor */
-.textarea {
-    width: 100%;
-    height: 100%;
-    color: #ffffff;
- }
-
-
-/* Context menu */
-body {
-  /*margin:0px;*/
-  /*font-family:"Open Sans",sans-serif;*/
-  font-family: "Times New Roman", Times, serif;
-  font-size: 16px;
-}
+/* Context menu start*/
 #context-menu {
   position:absolute;
   z-index:10000;
@@ -222,29 +145,45 @@ body {
   margin:2px 0px;
   border-color:#555;
 }
+/* Context menu end */
+
+/**********************/
+/* FOLDERS setion end */
+/**********************/
 
 
 
+/************************/
+/* TABAREA setion start */
+/************************/
+
+#tabarea{
+	height: 10%;
+	width: 75%;
+	position: absolute;
+	right: 0;
+	top: 0;
+	display: flex;
+  padding: 20px 10px;
+}
 
 
-/* Style tab links */
 .tablink {
-  /*background-color: #555;*/
-  color: white;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  font-size: 17px;
-  width: 12.5%;
+    background-color: #777;
+    color: white;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 17px;
+		margin: 0 0.5%;
+    padding: 0px 10px;
 }
 
 .tablink:hover {
-  background-color: #777;
+  background-color: #3f3f3f;
 }
 
-/* Style the tab content (and add height:100% for full page content) */
 .tabcontent {
   color: white;
   display: none;
@@ -252,15 +191,38 @@ body {
   height: 100%;
 }
 
-
-
-
 .item_active {
   background-color: #252525;
 }
+/**********************/
+/* TABAREA setion end */
+/**********************/
 
-.file {
-  background-color: inherit;
+
+
+/*************************/
+/* TEXTAREA setion start */
+/*************************/
+
+#txtarea{
+	height: 90%;
+	width: 75%;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
+/***********************/
+/* TEXTAREA setion end */
+/***********************/
+
+
+
+
+
+
 
 

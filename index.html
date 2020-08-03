@@ -6,23 +6,28 @@
     <title>Team 2 Editor</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles/css.css">
+    <link rel="stylesheet" href="./lib/codemirror.css">
+		<link rel="stylesheet" href="./lib/zenburn.css">
+<!--		<link rel="stylesheet" href="./lib/css.css">-->
          
 </head>
 <body>
 
-    <div id="app" style="height:100%; width:100%; overflow: hidden;">
-     
-        <div id="logo" aria-expanded="false" style="float: left; position: absolute; left: 0px; width: 25%; height: 19%; padding: 0px; top: 8px;">
-		  <h1> SVHH  </h1>
-		  <p>Text Editor</p>
-		</div>
+    <div id="app">
+     	
+     			<div class="folders" role="treeitem" aria-expanded="false">
+     			<div id="files">
+						<div id="logo" aria-expanded="false">
+							<img src="./img/png/logo.png" alt="">
+						</div>
         
-        <div class="folders" role="treeitem" aria-expanded="false" style="overflow:auto; white-space: nowrap; float: left; position: absolute; left: 0px; max-width: 400px; min-width: 400px; height: 100%; padding: 10px; top: 108px; font-size: 130%; ">
+        
 
             <ul id="myUL" class="explorer">
-                <li id = "0">
-                    
-                    <span class="caret" type="root"> <img src = "Images/folder.png" > Working Directory</span>
+                <li id = "0" >
+                   <div>
+                    	<span class="caret"> <img src = "./img/png/025-folder.png" > Working Directory</span>
+                    </div>
                     <ul class="nested"> 
                     </ul>
     
@@ -42,20 +47,26 @@
             </div>
             
         </div>
+        </div>
      
         <!--  border: 3px solid white; -->
-        <div id="tabarea" style="float: right; position: absolute; right: 0px;  width: 75%;     max-height: 100px;
-    min-height: 100px; padding: 0px; top: 8px; background-color: #555; ">            
-            
-		</div>
+        <div id="tabarea" style="background-color: #555; ">
+				</div>
+       	<div id="txtarea" >
+				<textarea id="myTextArea" class="txtarea"></textarea>
+				</div>
         <!--  for contetx menu only -->
+<!--
         <div class="txtarea" contenteditable="false" style=" overflow: scroll; white-space: pre; position: absolute; right: 0px; width: 75%; height: 115%;  padding: 10px; background: #141414; background-color: #141414;color: white; top: 55px; " >
         </div>
+-->
     </div>
     
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
     
 </body>
+   	<script src="./lib/codemirror.js"></script>
+		<script src="./lib/javascript.js"></script>
     <script src="Models/FilesModel.js"></script>
     <script src="Views/ExplorerView.js"></script>
     <script src="Controllers/ExplorerController.js"></script>
